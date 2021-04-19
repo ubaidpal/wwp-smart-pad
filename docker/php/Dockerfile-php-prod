@@ -1,0 +1,72 @@
+FROM php:7.2-fpm
+# Dockerfile author / maintainer
+MAINTAINER Rasikh Mashhadi <rasikh@salescandy.com>
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        curl \
+        nano \
+        vim \
+        git \
+        libmemcached-dev \
+        libz-dev \
+        libpq-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libfreetype6-dev \
+        libssl-dev \
+        libmcrypt-dev \
+        libicu-dev \
+        libc-client-dev \
+        libkrb5-dev \
+        libxml2-dev \
+        libgmp-dev \
+        re2c \
+        libmhash-dev \
+        zip \
+        unzip \
+        wget \
+        gnupg \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash && \
+    apt-get install -y nodejs build-essential
+
+RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install imap
+
+RUN docker-php-ext-install mbstring bcmath pdo pdo_mysql tokenizer zip intl xml json
+
+RUN docker-php-ext-configure gd \
+    --enable-gd-native-ttf \
+    --with-jpeg-dir=/usr/lib \
+    --with-freetype-dir=/usr/include/freetype2 && \
+    docker-php-ext-install gd
+
+RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
+RUN docker-php-ext-configure gmp
+RUN docker-php-ext-install gmp
+
+RUN pecl install mcrypt-1.0.1  && docker-php-ext-enable mcrypt
+
+
+RUN pecl install memcached-3.0.4 \
+    && docker-php-ext-enable memcached
+
+
+ADD ./docker/php/php-config/prod/php.ini /usr/local/etc/php/conf.d
+
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN echo 'export PATH="$PATH:$HOME/.composer/vendor/bin"' >> ~/.bashrc
+
+
+RUN /bin/bash -c "source ~/.bashrc"
+
+
+
+WORKDIR /var/www
+
+ADD ./ /var/www
+

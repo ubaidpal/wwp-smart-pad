@@ -1,0 +1,24 @@
+FROM mashhadi/wwp2-php:latest
+
+RUN  apt-get update
+
+
+#RUN pecl install xdebug \
+#    && docker-php-ext-enable xdebug
+#COPY ./docker/php/php-config/dev/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+ADD ./docker/php/php-config/dev/php.ini /usr/local/etc/php/conf.d
+
+
+RUN composer selfupdate
+
+RUN composer
+
+
+
+#RUN composer global require squizlabs/php_codesniffer=*
+
+#RUN composer global require friendsofphp/php-cs-fixer
+
+#RUN composer global require overtrue/phplint
+

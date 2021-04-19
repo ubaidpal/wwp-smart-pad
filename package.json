@@ -1,0 +1,39 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "build-Help": "cd nova-components/Help && npm run dev",
+        "build-Help-prod": "cd nova-components/Help && npm run prod",
+        "build-ItemBuilder": "cd nova-components/ItemBuilder && npm run dev",
+        "build-ItemBuilder-prod": "cd nova-components/ItemBuilder && npm run prod",
+        "build-ProductBuilder": "cd nova-components/ProductBuilder && npm run dev",
+        "build-ProductBuilder-prod": "cd nova-components/ProductBuilder && npm run prod",
+        "build-stripe-inspector": "cd nova-components/StripeInspector && npm run dev",
+        "build-stripe-inspector-prod": "cd nova-components/StripeInspector && npm run prod"
+    },
+    "devDependencies": {
+        "axios": "^0.18.1",
+        "bootstrap": "^4.3.1",
+        "cross-env": "^5.1",
+        "jquery": "^3.4.1",
+        "laravel-mix": "^4.0.16",
+        "lodash": "^4.17.11",
+        "popper.js": "^1.15.0",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.22.2",
+        "sass-loader": "^7.1.0",
+        "vue": "^2.6.10",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "ajv": "^6.10.0",
+        "imagemin": "^5.3.1",
+        "laravel-nova": "^1.0.9"
+    }
+}
